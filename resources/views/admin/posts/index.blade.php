@@ -1,14 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-4">
+    <div class="container">
 
-        <div class="header-page d-flex justify-content-between align-items-center mb-5">
-            <h1>Lista dei posts</h1>
-            <div>
-                <a href="{{ route('admin.posts.create') }}" class="btn btn-primary" as="button">Crea nuovo</a>
+        <div class="header-page pb-2 mb-4">
+            <div class=" d-flex justify-content-between align-items-center">
+                <h1>Lista dei posts</h1>
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.posts.create') }}" class="btn btn-primary" as="button">Crea nuovo</a>
+                </div>
+
             </div>
-
         </div>
 
         @if (session('message'))
@@ -17,50 +19,64 @@
             </div>
         @endif
 
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col" class="col">#</th>
-                    <th scope="col" class="col-7">Title</th>
-                    <th scope="col" class="col">Slug</th>
-                    <th scope="col" class="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($posts as $post)
+        @if (!count($posts))
+            <div class="alert alert-warning">
+                Nessun record trovato
+            </div>
+        @else
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">{{ $post->id }}</th>
-                        <td>{{ $post->title }}</td>
-                        <td>{{ $post->slug }}</td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <a href="{{ route('admin.posts.show', $post) }}" as="button" class="btn btn-info"><i
-                                        class="fa-solid fa-magnifying-glass"></i></a>
-                                <a href="{{ route('admin.posts.edit', $post) }}" as="button" class="btn btn-warning"><i
-                                        class="fa-solid fa-pencil"></i></a>
+                        <th scope="col" class="col">#</th>
+                        <th scope="col" class="col-7">Title</th>
+                        <th scope="col" class="col">Slug</th>
+                        <th scope="col" class="col-2 text-right"></th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                                <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
 
-                                    <button class="btn btn-danger"><i class="fa-solid fa-bomb"></i></button>
+                    @foreach ($posts as $post)
+                        <tr>
+                            <th scope="row">{{ $post->id }}</th>
+                            <td>
+                                @if ($post->cover_image)
+                                    <a href="#" class="btn btn-sm btn-secondary me-3"><i
+                                            class="fa-solid fa-image"></i></a>
+                                @endif{{ $post->title }}
+                            </td>
+                            <td>{{ $post->slug }}</td>
+                            <td>
+                                <div class="d-flex gap-2 justify-content-end">
+                                    <a href="{{ route('admin.posts.show', $post) }}" as="button"
+                                        class="btn btn-info btn-sm"><i class="fa-solid fa-magnifying-glass"></i></a>
+                                    <a href="{{ route('admin.posts.edit', $post) }}" as="button"
+                                        class="btn btn-warning btn-sm"><i class="fa-solid fa-pencil"></i></a>
 
-                                </form>
-                                {{-- <a href="{{ route('admin.posts.destroy', $post) }}" as="button" class="btn btn-danger"><i
+                                    <form action="{{ route('admin.posts.destroy', $post) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="btn btn-danger  btn-sm"><i class="fa-solid fa-bomb"></i></button>
+
+                                    </form>
+                                    {{-- <a href="{{ route('admin.posts.destroy', $post) }}" as="button" class="btn btn-danger"><i
                                         class="fa-solid fa-bomb"></i></a> --}}
 
 
 
-                            </div>
+                                </div>
 
-                        </td>
-                    </tr>
-                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
 
-            </tbody>
-        </table>
 
+
+
+                </tbody>
+            </table>
+        @endif
 
     </div>
 @endsection

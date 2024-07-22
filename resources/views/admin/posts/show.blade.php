@@ -1,21 +1,30 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container py-4">
+    <div class="container">
 
 
-        <div class="header-page mb-5">
+        <div class="header-page  pb-2 mb-4">
             <div class=" d-flex justify-content-between align-items-center">
                 <h1>{{ $post->title }}</h1>
-                <!-- bottone -->
+                <div class="d-flex gap-2">
+                    <a href="{{ route('admin.posts.index') }}" class="btn btn-primary" as="button">Torna alla lista</a>
+                    <a href="{{ route('admin.posts.edit', $post) }}" class="btn btn-primary" as="button">Modifica</a>
+                </div>
             </div>
-            <a href="{{ route('admin.posts.index') }}">Torna alla lista dei post</a>
         </div>
-
 
         <p>
             {{ $post->content }}
         </p>
+        <hr>
+        @if ($post->cover_image)
+            <div>
+                <img src="{{ asset('storage/' . $post->cover_image) }}">
+            </div>
+        @endif
+
+
 
 
 

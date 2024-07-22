@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -36,23 +37,27 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
 
+
         $data = $request->validated();
 
-        // $slug = Str::of($data['title'])->slug();
+
+
+        //gestione slug
         $data['slug'] = Str::of($data['title'])->slug();
-        // $post->slug = Str::of($post->title)->slug();
+        //gestione immagine
+
+        // $img_path = $request->hasFile('cover_image') ? Storage::put('uploads', $data['cover_image']) : NULL;
+        $img_path = $request->hasFile('cover_image') ? $request->cover_image->store('uploads') : NULL;
 
         $post = new Post();
 
         $post->title = $data['title'];
         $post->content = $data['content'];
         $post->slug = $data['slug'];
-
+        $post->cover_image = $img_path;
 
         //$post->fill($data);
         $post->save();
-
-
 
 
         return redirect()->route('admin.posts.index')->with('message', 'Articolo creato correttamente');
@@ -90,6 +95,8 @@ class PostController extends Controller
 
         // $post->slug = Str::of($post->title)->slug();
         $data['slug'] = Str::of($data['title'])->slug();
+        $img_path = $request->hasFile('cover_image') ? $request->cover_image->store('uploads') : NULL;
+
 
         // $post->title = $data['title'];
         // $post->content = $data['content'];
@@ -97,6 +104,8 @@ class PostController extends Controller
 
 
         $post->update($data);
+        $post->cover_image = $img_path;
+        $post->save();
 
 
         // $post->slug = $data['slug'];
@@ -110,6 +119,15 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+
+        //se presente immagine, la cancello
+
+        if ($post->cover_image) {
+            //cancello immagine
+            Storage::delete($post->cover_image);
+        }
+
+
         //salviamo in maniera preventiva il post id
         $post_id = $post->id;
         //cancello record

@@ -13,5 +13,5 @@ class Post extends Model
     // protected $fillable = ['title', 'content', 'slug'];
 
     //tutti i campi che non vogliamo siano abilitati al mass update
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'cover_image'];
 }
