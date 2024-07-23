@@ -1,6 +1,6 @@
 # Roadmap per gestione categorie (oggi) e tags (domani)
 
--   [] Creare tabella categories (migration + model)
+-   [x] Creare tabella categories (migration + model)
 -   [] Seeder tabella categories -> array di dati ['Frontend', 'Backend', 'AI', '']
 -   [] Creare relazione tra tabella posts e tabella categories (migration)
 -   [] Valutare tipo di relazione tra le tabelle (restricted, null, noaction)
