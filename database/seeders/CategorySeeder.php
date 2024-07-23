@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
@@ -15,6 +16,9 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+
+
+        Schema::disableForeignKeyConstraints();
 
         //svuoto tabella prima di popolarla
         Category::truncate();
@@ -31,5 +35,8 @@ class CategorySeeder extends Seeder
 
             $new_category->save();
         }
+
+
+        Schema::enableForeignKeyConstraints();
     }
 }
