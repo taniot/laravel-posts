@@ -25,6 +25,20 @@
             </div>
 
             <div class="mb-3">
+                <label for="post-content" class="form-label">Categoria del post - {{ old('category_id') }}</label>
+                <select class="form-select" aria-label="Default select example" name="category_id">
+                    <option value="">Seleziona Categoria</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}" @if (old('category_id') == $category->id) selected @endif>
+                            {{ $category->title }}</option>
+                    @endforeach
+
+                </select>
+            </div>
+
+
+
+            <div class="mb-3">
                 <label for="cover-image" class="form-label">Cover Image</label>
                 <input class="form-control" type="file" id="cover-image" name="cover_image"
                     value="{{ old('cover_image') }}">

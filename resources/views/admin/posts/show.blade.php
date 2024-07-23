@@ -17,6 +17,10 @@
         <p>
             {{ $post->content }}
         </p>
+
+        <hr>
+        Category: {{ $post->category?->title ?: 'Categoria non definita' }}
+
         <hr>
         @if ($post->cover_image)
             <div>

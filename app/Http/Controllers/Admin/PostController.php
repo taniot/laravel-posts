@@ -6,7 +6,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -28,7 +30,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -36,9 +41,9 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-
-
         $data = $request->validated();
+
+        // dd($request->all());
 
 
 
@@ -61,6 +66,8 @@ class PostController extends Controller
         $post->content = $data['content'];
         $post->slug = $data['slug'];
         $post->cover_image = $img_path;
+        //$post->category_id = $request->input('category_id'); //99
+        $post->category_id = $data['category_id']; //99
 
         //$post->fill($data);
         $post->save();
