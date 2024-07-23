@@ -14,4 +14,10 @@ class Post extends Model
 
     //tutti i campi che non vogliamo siano abilitati al mass update
     protected $guarded = ['id', 'cover_image'];
+
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
