@@ -1,7 +1,7 @@
 # Roadmap per gestione categorie (oggi) e tags (domani)
 
 -   [x] Creare tabella categories (migration + model)
--   [] Seeder tabella categories -> array di dati ['Frontend', 'Backend', 'AI', '']
+-   [x] Seeder tabella categories -> array di dati ['Frontend', 'Backend', 'AI', '']
 -   [] Creare relazione tra tabella posts e tabella categories (migration)
 -   [] Valutare tipo di relazione tra le tabelle (restricted, null, noaction)
 -   [] Istruire Laravel sulla cardinalità / relazione tra posts e categories
